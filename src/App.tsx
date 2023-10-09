@@ -6,35 +6,27 @@ import Web3 from "web3";
 import { ethers } from "ethers";
 
 function App() {
-    const [haveMetamask, setHaveMetamask] = useState(false);
-    const [ethereum, setEthereum] = useState<any>(null); // window.ethereum
+    const [metamask, setMetamask] = useState<any>(null); // window.ethereum
     const [network, setNetwork] = useState<string | null>(null);
     const [isConnected, setIsConnected] = useState(false);
     const [balance, setBalance] = useState<string | null>(null);
     const [address, setAddress] = useState(null);
 
-    const provider = new ethers.BrowserProvider(ethereum);
+    const provider = new ethers.BrowserProvider(metamask);
 
     const isMetaMaskInstalled = () => {
         //@ts-ignore
         const { ethereum } = window;
-        setHaveMetamask(ethereum);
-        if (ethereum) {
-            setEthereum(ethereum);
-        }
+        setMetamask(ethereum);
     };
-
-    useEffect(() => {
-        isMetaMaskInstalled();
-    }, []);
 
     const connectWallet = async () => {
         try {
-            const accounts = await ethereum.request({
+            const accounts = await metamask.request({
                 method: "eth_requestAccounts",
             });
 
-            const chainId = await ethereum.request({
+            const chainId = await metamask.request({
                 method: "eth_chainId",
             });
 
@@ -65,11 +57,21 @@ function App() {
         }
     };
 
+    useEffect(() => {
+        isMetaMaskInstalled();
+    }, []);
+
+    useEffect(() => {
+        if (metamask) {
+            connectWallet();
+        }
+    }, [metamask]);
+
     return (
         <>
             <button onClick={async () => await connectWallet()}>Connect</button>
-            {haveMetamask ? <div>Have Metamask</div> : <div>Don't Have Metamask</div>}
-            {isConnected ? <div>Connected Metamask</div> : <div>Not Connected Metamask</div>}
+            {metamask ? <div>Have Metamask</div> : <div>Don't Have Metamask</div>}
+            {isConnected && network ? <div>Connected Metamask, network {network}</div> : <div>Not Connected Metamask</div>}
         </>
     );
 }
