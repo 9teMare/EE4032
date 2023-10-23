@@ -5,12 +5,27 @@ import ConnectButton from "./ConnectButton";
 import { Link } from "react-router-dom";
 
 export default function Navbar() {
-    const { metamask, address } = useContext(MetamaskContext)!;
+    const { metamask, address, setters } = useContext(MetamaskContext)!;
+    const { setIsConnected } = setters;
+    const handleLogout = () => {
+        if (metamask) {
+            metamask
+                .disconnect()
+                .then(() => {
+                    console.log("User is logged out");
+                    // Perform any additional actions after logout, if necessary
+                    setIsConnected(false);
+                })
+                .catch((error: any) => {
+                    console.error("Error while logging out:", error);
+                });
+        }
+    };
 
     return (
         <div className="navbar bg-base-100 justify-between">
             <div className="flex-1">
-                <Link to="/home" className="btn btn-ghost normal-case text-xl">
+                <Link to="/" className="btn btn-ghost normal-case text-xl">
                     EE4032 Blockchain Engineering
                 </Link>
             </div>
@@ -33,7 +48,7 @@ export default function Navbar() {
                                     <a>Settings</a>
                                 </li>
                                 <li>
-                                    <a>Logout</a>
+                                    <a onClick={handleLogout}>Logout</a>
                                 </li>
                             </ul>
                         </div>

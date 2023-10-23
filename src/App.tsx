@@ -5,6 +5,7 @@ import "./App.css";
 import { MetamaskContext } from "./context";
 import Profile from "./pages/profile";
 import Home from "./pages/home";
+import ErrorPage from "./pages/error";
 
 function App() {
     const [metamask, setMetamask] = useState<any>(null); // window.ethereum
@@ -27,10 +28,7 @@ function App() {
         {
             path: "/",
             element: <Home />,
-        },
-        {
-            path: "/home",
-            element: <Home />,
+            errorElement: <ErrorPage />,
         },
         {
             path: "/profile",
