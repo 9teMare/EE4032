@@ -16,7 +16,7 @@ export default function Profile() {
     const { address, balance, isConnected, network } = useContext(MetamaskContext)!;
 
     return (
-        <Layout>
+        //<Layout>
             <div>
                 {isConnected && network ? (
                     <ProfileInfo address={address!} network={network} balance={balance!} />
@@ -24,6 +24,6 @@ export default function Profile() {
                     <div>You are not connected to Metamask</div>
                 )}
             </div>
-        </Layout>
+       // </Layout>
     );
 }

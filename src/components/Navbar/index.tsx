@@ -28,6 +28,12 @@ export default function Navbar() {
                 <Link to="/" className="btn btn-ghost normal-case text-xl">
                     EE4032 Blockchain Engineering
                 </Link>
+                <Link className="flex justify-center" to="/AboutUsPage" style={{ paddingLeft: "20px", paddingRight: "20px" }}>
+                    ABOUT US     
+                </Link>
+                <Link className="flex justify-center" to="/MissionPage" style={{ paddingLeft: "20px", paddingRight: "20px" }}>
+                             MISSION PAGE
+                </Link>
             </div>
             <div className="flex-none gap-2">
                 {metamask && address ? (
@@ -44,6 +50,7 @@ export default function Navbar() {
                                         Profile
                                     </Link>
                                 </li>
+                            
                                 <li>
                                     <a>Settings</a>
                                 </li>

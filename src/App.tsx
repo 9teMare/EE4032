@@ -6,6 +6,8 @@ import { MetamaskContext } from "./context";
 import Profile from "./pages/profile";
 import Home from "./pages/home";
 import ErrorPage from "./pages/error";
+import AboutUs from "./pages/AboutUsPage";
+import MissionPage from "./pages/MissionPage";
 
 function App() {
     const [metamask, setMetamask] = useState<any>(null); // window.ethereum
@@ -33,6 +35,14 @@ function App() {
         {
             path: "/profile",
             element: <Profile />,
+        },
+        {
+            path: "/aboutuspage",
+            element: <AboutUs />,
+        },
+        {
+            path: "/MissionPage",
+            element: <MissionPage />,
         },
     ]);
 
