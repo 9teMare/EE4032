@@ -4,6 +4,8 @@ export const MetamaskContext = createContext<{
     metamask: any;
     address: string | undefined;
     balance: string | undefined;
+    network: string | undefined;
+    isConnected: boolean;
     setters: {
         setNetwork: React.Dispatch<React.SetStateAction<string | undefined>>;
         setAddress: React.Dispatch<React.SetStateAction<string | undefined>>;

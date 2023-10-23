@@ -1,7 +1,8 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { MetamaskContext } from "../../context";
 import ProfileIcon from "../ProfileIcon";
 import ConnectButton from "./ConnectButton";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
     const { metamask, address } = useContext(MetamaskContext)!;
@@ -9,7 +10,9 @@ export default function Navbar() {
     return (
         <div className="navbar bg-base-100 justify-between">
             <div className="flex-1">
-                <a className="btn btn-ghost normal-case text-xl">EE4032 Blockchain Engineering</a>
+                <Link to="/home" className="btn btn-ghost normal-case text-xl">
+                    EE4032 Blockchain Engineering
+                </Link>
             </div>
             <div className="flex-none gap-2">
                 {metamask && address ? (
@@ -22,7 +25,9 @@ export default function Navbar() {
 
                             <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-24">
                                 <li>
-                                    <a className="justify-between">Profile</a>
+                                    <Link className="justify-between" to="/profile">
+                                        Profile
+                                    </Link>
                                 </li>
                                 <li>
                                     <a>Settings</a>

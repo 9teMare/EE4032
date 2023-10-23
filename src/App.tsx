@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
-import Web3 from "web3";
-import Layout from "./layout";
+// import Web3 from "web3";
 import { MetamaskContext } from "./context";
+import Profile from "./pages/profile";
+import Home from "./pages/home";
 
 function App() {
     const [metamask, setMetamask] = useState<any>(null); // window.ethereum
@@ -21,12 +23,29 @@ function App() {
         isMetaMaskInstalled();
     }, []);
 
+    const router = createBrowserRouter([
+        {
+            path: "/",
+            element: <Home />,
+        },
+        {
+            path: "/home",
+            element: <Home />,
+        },
+        {
+            path: "/profile",
+            element: <Profile />,
+        },
+    ]);
+
     return (
         <MetamaskContext.Provider
             value={{
                 metamask: metamask,
                 address: address,
                 balance: balance,
+                network: network,
+                isConnected: isConnected,
                 setters: {
                     setNetwork,
                     setAddress,
@@ -35,10 +54,7 @@ function App() {
                 },
             }}
         >
-            <Layout>
-                {metamask ? <div>Have Metamask</div> : <div>Don't Have Metamask</div>}
-                {isConnected && network ? <div>Connected Metamask, network {network}</div> : <div>Not Connected Metamask</div>}
-            </Layout>
+            <RouterProvider router={router} />
         </MetamaskContext.Provider>
     );
 }
