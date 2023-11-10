@@ -1,6 +1,5 @@
 import Layout from "../layout";
 import { AnimatePresence, motion } from "framer-motion";
-//@ts-ignore
 import { gradient } from "../components/gradient";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
