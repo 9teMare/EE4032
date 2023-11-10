@@ -1,14 +1,13 @@
 {
   "_format": "hh-sol-cache-2",
   "files": {
-    "/Users/zihao/Documents/GitHub/EE4032/chainrity/contracts/AddressSet.sol": {
-      "lastModificationDate": 1699525415150,
-      "contentHash": "20a5973117d17436d32eb9567edda7ad",
-      "sourceName": "contracts/AddressSet.sol",
+    "/Users/zihao/Documents/GitHub/EE4032/chainrity/contracts/Chainrity.sol": {
+      "lastModificationDate": 1699642099927,
+      "contentHash": "8bfec9f20ee02dfc3a4ced9643ce19e1",
+      "sourceName": "contracts/Chainrity.sol",
       "solcConfig": {
-        "version": "0.8.22",
+        "version": "0.8.19",
         "settings": {
-          "evmVersion": "paris",
           "optimizer": {
             "enabled": false,
             "runs": 200
@@ -31,161 +30,10 @@
       },
       "imports": [],
       "versionPragmas": [
-        ">=0.5.0"
+        "^0.8.4"
       ],
       "artifacts": [
-        "AddressSet"
-      ]
-    },
-    "/Users/zihao/Documents/GitHub/EE4032/chainrity/contracts/CampaignFactory.sol": {
-      "lastModificationDate": 1699525415143,
-      "contentHash": "31821d92aba75fdba1f9ce4c54129445",
-      "sourceName": "contracts/CampaignFactory.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
-          "evmVersion": "paris",
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./Campaign.sol",
-        "./AddressSet.sol",
-        "./Reputation.sol"
-      ],
-      "versionPragmas": [
-        ">=0.5.0"
-      ],
-      "artifacts": [
-        "CampaignFactory"
-      ]
-    },
-    "/Users/zihao/Documents/GitHub/EE4032/chainrity/contracts/Campaign.sol": {
-      "lastModificationDate": 1699525415155,
-      "contentHash": "f7d12b13aae1ea91ad55fb95f2a1408d",
-      "sourceName": "contracts/Campaign.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
-          "evmVersion": "paris",
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./CampaignFactory.sol",
-        "./Reputation.sol"
-      ],
-      "versionPragmas": [
-        ">=0.5.0"
-      ],
-      "artifacts": [
-        "Campaign"
-      ]
-    },
-    "/Users/zihao/Documents/GitHub/EE4032/chainrity/contracts/Reputation.sol": {
-      "lastModificationDate": 1699525415171,
-      "contentHash": "05f341ff4089c5de578094eb02f894a9",
-      "sourceName": "contracts/Reputation.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
-          "evmVersion": "paris",
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        ">=0.5.0"
-      ],
-      "artifacts": [
-        "Reputation"
-      ]
-    },
-    "/Users/zihao/Documents/GitHub/EE4032/chainrity/contracts/Migrations.sol": {
-      "lastModificationDate": 1699525415167,
-      "contentHash": "50b3b1dc92806dc8f604fc8c5c65518f",
-      "sourceName": "contracts/Migrations.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
-          "evmVersion": "paris",
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        ">=0.4.22 <0.9.0"
-      ],
-      "artifacts": [
-        "Migrations"
+        "Chainrity"
       ]
     }
   }
