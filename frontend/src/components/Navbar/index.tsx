@@ -26,7 +26,7 @@ export default function Navbar() {
         <div className="navbar bg-base-100 justify-between">
             <div className="flex-1">
                 <Link to="/" className="btn btn-ghost normal-case text-xl">
-                    EE4032 Blockchain Engineering
+                    CHAINRITY
                 </Link>
             </div>
             <div className="flex-none gap-2">

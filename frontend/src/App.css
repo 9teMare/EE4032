@@ -31,3 +31,14 @@
 .read-the-docs {
   color: #888;
 } */
+
+#gradient-canvas {
+  width:100%;
+  height:100%;
+  z-index: 0;
+  --gradient-color-1: #bde1ff;
+  --gradient-color-2: #6ca0f4;
+  --gradient-color-3: #e2d8ee;
+  --gradient-color-4: #94c8ff;
+  z-index:0;
+}
