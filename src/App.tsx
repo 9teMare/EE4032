@@ -8,6 +8,7 @@ import Home from "./pages/home";
 import ErrorPage from "./pages/error";
 import AboutUs from "./pages/AboutUsPage";
 import MissionPage from "./pages/MissionPage";
+import Approach from "./pages/Approach";
 
 function App() {
     const [metamask, setMetamask] = useState<any>(null); // window.ethereum
@@ -37,12 +38,16 @@ function App() {
             element: <Profile />,
         },
         {
-            path: "/aboutuspage",
+            path: "/AboutUsPage",
             element: <AboutUs />,
         },
         {
             path: "/MissionPage",
             element: <MissionPage />,
+        },
+        {
+            path: "/Approach",
+            element: <Approach />,
         },
     ]);
 

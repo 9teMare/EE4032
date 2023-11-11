@@ -32,7 +32,10 @@ export default function Navbar() {
                     ABOUT US     
                 </Link>
                 <Link className="flex justify-center" to="/MissionPage" style={{ paddingLeft: "20px", paddingRight: "20px" }}>
-                             MISSION PAGE
+                    MISSION PAGE
+                </Link>
+                <Link className="flex justify-center" to="/Approach" style={{ paddingLeft: "20px", paddingRight: "20px" }}>
+                    APPROACH TEST
                 </Link>
             </div>
             <div className="flex-none gap-2">
