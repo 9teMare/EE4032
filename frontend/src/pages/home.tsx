@@ -1,8 +1,7 @@
-import Layout from "../layout";
 import { AnimatePresence, motion } from "framer-motion";
-import { gradient } from "../components/gradient";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { gradient } from "../components/Gradient";
 
 export default function Home() {
     useEffect(() => {
