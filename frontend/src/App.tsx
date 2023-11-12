@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
-import { Web3, HttpProvider } from "web3";
 import { MetamaskContext } from "./context";
 import Profile from "./pages/profile";
 import Home from "./pages/home";
@@ -40,8 +39,6 @@ function App() {
             element: <Profile />,
         },
     ]);
-
-    const web3 = new Web3(new HttpProvider(import.meta.env.VITE_API_URL));
 
     return (
         <MetamaskContext.Provider

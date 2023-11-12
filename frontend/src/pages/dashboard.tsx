@@ -2,13 +2,13 @@ import Layout from "../layout";
 import { useContext } from "react";
 import { MetamaskContext } from "../context";
 
+import CampaignList from "../components/CampaignList";
+
 export default function Dashboard() {
-    const { metamask, isConnected, network } = useContext(MetamaskContext)!;
     return (
         <Layout>
-            <div>
-                {metamask ? <div>Have Metamask</div> : <div>Don't Have Metamask</div>}
-                {isConnected && network ? <div>Connected Metamask, network {network}</div> : <div>Not Connected Metamask</div>}
+            <div className="flex flex-col justify-center p-2 h-full">
+                <CampaignList />
             </div>
         </Layout>
     );

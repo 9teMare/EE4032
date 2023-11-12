@@ -20,12 +20,10 @@ export default function ConnectButton() {
             });
 
             let balanceVal: ethers.BigNumberish = await provider.getBalance(accounts[0]);
-            console.log(balanceVal);
 
             //@ts-ignore
             let bal = ethers.formatEther(balanceVal);
 
-            console.log(bal);
             if (chainId === "0x3") {
                 setNetwork("Ropsten Test Network");
             } else if (chainId === "0x5") {
@@ -38,8 +36,6 @@ export default function ConnectButton() {
             setAddress(accounts[0]);
             setBalance(bal);
             setIsConnected(true);
-
-            // navigate('/InterfaceDemo/profile');
         } catch (error) {
             setIsConnected(false);
             console.log(error);

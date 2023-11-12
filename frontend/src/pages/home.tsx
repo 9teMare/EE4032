@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { gradient } from "../components/Gradient";
+import { CONTRACT_ADDRESS } from "../contracts/config";
 
 export default function Home() {
     useEffect(() => {
@@ -69,7 +70,7 @@ export default function Home() {
                                 <div className="card-actions justify-end">
                                     <Link
                                         className="badge badge-outline"
-                                        to="https://sepolia.etherscan.io/address/0x829C3CB74C867aA96a3932A7bCD0906D1D44BA41#code"
+                                        to={`https://sepolia.etherscan.io/address/${CONTRACT_ADDRESS}#code`}
                                         target="_blank"
                                     >
                                         Etherscan

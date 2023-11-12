@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { MetamaskContext } from "../../context";
 import ProfileIcon from "../ProfileIcon";
 import ConnectButton from "./ConnectButton";
@@ -23,7 +23,7 @@ export default function Navbar() {
     };
 
     return (
-        <div className="navbar bg-base-100 justify-between">
+        <div className="navbar bg-base-100 justify-between h-16 drop-shadow-md">
             <div className="flex-1">
                 <Link to="/" className="btn btn-ghost normal-case text-xl">
                     CHAINRITY
