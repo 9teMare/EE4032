@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
-import { MetamaskContext } from "../../context";
+import { LoadingContext, MetamaskContext } from "../../context";
 import { donateToCampaign } from "../../api/interact";
 
 export default function DonationModal({
@@ -14,6 +14,7 @@ export default function DonationModal({
     const [title, imgUrl, description, isLive, initiator, deadline, _value] = campaignInfo ?? Array(7).fill(null);
 
     const { balance } = useContext(MetamaskContext)!;
+    const { refresh } = useContext(LoadingContext)!;
 
     const [isRevealId, setIsRevealId] = useState(false);
     const [amount, setAmount] = useState(0);
@@ -28,6 +29,7 @@ export default function DonationModal({
         e.preventDefault();
         donateToCampaign(campaignId!, amount).finally(() => {
             closeModal();
+            refresh();
         });
     };
 
@@ -38,7 +40,7 @@ export default function DonationModal({
                     <div className="flex items-center justify-between">
                         <h3 className="font-bold text-lg">Donating to </h3>
                         <button
-                            className="badge badge-accent badge-outline hover:bg-accent hover:text-white"
+                            className="badge badge-accent badge-outline hover:bg-accent hover:text-white border-accent"
                             onClick={() => setIsRevealId(!isRevealId)}
                         >
                             {isRevealId ? "Hide" : "Review"} Initiator

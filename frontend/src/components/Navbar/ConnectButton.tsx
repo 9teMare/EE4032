@@ -19,10 +19,9 @@ export default function ConnectButton() {
                 method: "eth_chainId",
             });
 
-            let balanceVal: ethers.BigNumberish = await provider.getBalance(accounts[0]);
+            const balanceVal: ethers.BigNumberish = await provider.getBalance(accounts[0]);
 
-            //@ts-ignore
-            let bal = ethers.formatEther(balanceVal);
+            const bal = ethers.formatEther(balanceVal);
 
             if (chainId === "0x3") {
                 setNetwork("Ropsten Test Network");

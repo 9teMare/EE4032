@@ -12,4 +12,9 @@ export const MetamaskContext = createContext<{
         setBalance: React.Dispatch<React.SetStateAction<string | undefined>>;
         setIsConnected: React.Dispatch<React.SetStateAction<boolean>>;
     };
+    refreshBalance: () => Promise<void>;
+} | null>(null);
+
+export const LoadingContext = createContext<{
+    refresh: () => Promise<void>;
 } | null>(null);

@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
 import { MetamaskContext } from "./context";
-import Profile from "./pages/profile";
 import Home from "./pages/home";
 import ErrorPage from "./pages/error";
 import Dashboard from "./pages/dashboard";
+import { ethers } from "ethers";
 
 function App() {
     const [metamask, setMetamask] = useState<any>(null); // window.ethereum
@@ -24,6 +24,16 @@ function App() {
         isMetaMaskInstalled();
     }, []);
 
+    const refreshBalance = async () => {
+        const accounts = await metamask.request({
+            method: "eth_requestAccounts",
+        });
+
+        const provider = new ethers.BrowserProvider(metamask);
+        const balanceVal: ethers.BigNumberish = await provider.getBalance(accounts[0]);
+        setBalance(ethers.formatEther(balanceVal));
+    };
+
     const router = createBrowserRouter([
         {
             path: "/",
@@ -33,10 +43,6 @@ function App() {
         {
             path: "/dashboard",
             element: <Dashboard />,
-        },
-        {
-            path: "/profile",
-            element: <Profile />,
         },
     ]);
 
@@ -54,6 +60,7 @@ function App() {
                     setBalance,
                     setIsConnected,
                 },
+                refreshBalance,
             }}
         >
             <RouterProvider router={router} />

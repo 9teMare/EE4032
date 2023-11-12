@@ -5,22 +5,8 @@ import ConnectButton from "./ConnectButton";
 import { Link } from "react-router-dom";
 
 export default function Navbar() {
-    const { metamask, address, setters } = useContext(MetamaskContext)!;
+    const { metamask, address, setters, balance, refreshBalance } = useContext(MetamaskContext)!;
     const { setIsConnected } = setters;
-    const handleLogout = () => {
-        if (metamask) {
-            metamask
-                .disconnect()
-                .then(() => {
-                    console.log("User is logged out");
-                    // Perform any additional actions after logout, if necessary
-                    setIsConnected(false);
-                })
-                .catch((error: any) => {
-                    console.error("Error while logging out:", error);
-                });
-        }
-    };
 
     return (
         <div className="navbar bg-base-100 justify-between h-16 drop-shadow-md">
@@ -32,25 +18,22 @@ export default function Navbar() {
             <div className="flex-none gap-2">
                 {metamask && address ? (
                     <div className="flex justify-center items-center gap-4">
-                        Welcome, {address}
+                        <div className="flex flex-col">
+                            <p>Welcome, {address}</p>
+                            <div className="flex justify-end items-center gap-2">
+                                <p>Available balance: {Number(balance).toFixed(4)} ETH </p>
+                                <button className="btn btn-xs justify-center items-center" onClick={async () => await refreshBalance()}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+                                        <path d="M105.1 202.6c7.7-21.8 20.2-42.3 37.8-59.8c62.5-62.5 163.8-62.5 226.3 0L386.3 160H336c-17.7 0-32 14.3-32 32s14.3 32 32 32H463.5c0 0 0 0 0 0h.4c17.7 0 32-14.3 32-32V64c0-17.7-14.3-32-32-32s-32 14.3-32 32v51.2L414.4 97.6c-87.5-87.5-229.3-87.5-316.8 0C73.2 122 55.6 150.7 44.8 181.4c-5.9 16.7 2.9 34.9 19.5 40.8s34.9-2.9 40.8-19.5zM39 289.3c-5 1.5-9.8 4.2-13.7 8.2c-4 4-6.7 8.8-8.1 14c-.3 1.2-.6 2.5-.8 3.8c-.3 1.7-.4 3.4-.4 5.1V448c0 17.7 14.3 32 32 32s32-14.3 32-32V396.9l17.6 17.5 0 0c87.5 87.4 229.3 87.4 316.7 0c24.4-24.4 42.1-53.1 52.9-83.7c5.9-16.7-2.9-34.9-19.5-40.8s-34.9 2.9-40.8 19.5c-7.7 21.8-20.2 42.3-37.8 59.8c-62.5 62.5-163.8 62.5-226.3 0l-.1-.1L125.6 352H176c17.7 0 32-14.3 32-32s-14.3-32-32-32H48.4c-1.6 0-3.2 .1-4.8 .3s-3.1 .5-4.6 1z" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
                         <div className="dropdown dropdown-end">
-                            <label tabIndex={0} className="btn btn-ghost btn-circle">
+                            <label tabIndex={0} className="btn btn-ghost btn-circle ">
                                 <ProfileIcon address={address!} />
                             </label>
-
-                            <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-24">
-                                <li>
-                                    <Link className="justify-between" to="/profile">
-                                        Profile
-                                    </Link>
-                                </li>
-                                <li>
-                                    <a>Settings</a>
-                                </li>
-                                <li>
-                                    <a onClick={handleLogout}>Logout</a>
-                                </li>
-                            </ul>
                         </div>
                     </div>
                 ) : (

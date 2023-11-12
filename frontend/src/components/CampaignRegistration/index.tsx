@@ -2,7 +2,7 @@ import { FormEventHandler, useContext, useEffect, useState } from "react";
 import Datepicker, { DateValueType } from "react-tailwindcss-datepicker";
 import { startCampaign } from "../../api/interact";
 import dayjs from "dayjs";
-import { MetamaskContext } from "../../context";
+import { LoadingContext, MetamaskContext } from "../../context";
 
 function Field({
     attribute,
@@ -54,6 +54,7 @@ export default function CampaignRegistration() {
     });
 
     const { address, isConnected } = useContext(MetamaskContext)!;
+    const { refresh } = useContext(LoadingContext)!;
 
     const handleValueChange = (newValue: DateValueType) => {
         // startDate and endDate are the same since we are using asSingle={true}
@@ -75,6 +76,7 @@ export default function CampaignRegistration() {
         }).finally(() => {
             //@ts-ignore
             document.getElementById("register_campaign").close();
+            refresh();
         });
     };
 
@@ -107,7 +109,7 @@ export default function CampaignRegistration() {
             </div>
 
             <dialog id="register_campaign" className="modal">
-                <div className="modal-box w-11/12 max-w-5xl">
+                <div className="modal-box w-11/12 max-w-2xl">
                     <h3 className="font-bold text-lg">Start a new Campaign on chain!</h3>
                     <p>Please fill in the following information</p>
 
@@ -122,7 +124,7 @@ export default function CampaignRegistration() {
                             <button className="btn">Close</button>
                         </form>
                         <form method="dialog" onSubmit={handleSubmit}>
-                            <button className="btn btn-primary" type="submit" disabled={!isAllowSubmit}>
+                            <button className="btn btn-accent" type="submit" disabled={!isAllowSubmit}>
                                 Submit
                             </button>
                         </form>
