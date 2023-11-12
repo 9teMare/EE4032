@@ -10,7 +10,14 @@ export default function CampaignCard({ campaignInfo, isLast, onDonate }: { campa
         <div className={`card w-full h-full bg-base-100 shadow-xl`}>
             <figure className="lg:h-40 2xl:h-52">
                 <img className="lg:object-fill" src={imgUrl} alt="Campaign Image" />
-                <div className="card-actions justify-end absolute right-2 top-[8px]">
+                <div className={`absolute right-2 top-[8px] badge ${deadline > dayjs().unix() ? "badge-accent" : "badge-neutral"}`}>
+                    {deadline > dayjs().unix() ? "In progress" : "Ended"}
+                </div>
+            </figure>
+            <div className="card-body p-4">
+                <div className="card-title flex justify-between">
+                    <h2 className="max-w-[245px]">{title}</h2>
+
                     <div
                         className="tooltip tooltip-left"
                         {...(!isConnected && {
@@ -18,23 +25,11 @@ export default function CampaignCard({ campaignInfo, isLast, onDonate }: { campa
                         })}
                     >
                         <button
-                            className={`btn btn-sm ${
-                                isConnected
-                                    ? "bg-transparent backdrop-blur-lg text-white hover:btn-accent border-white"
-                                    : "bg-transparent backdrop-blur-sm btn-disabled"
-                            }`}
+                            className={`btn btn-neutral btn-sm ${isConnected ? " hover:btn-accent " : "btn-disabled"}`}
                             onClick={() => onDonate()}
                         >
                             Donate
                         </button>
-                    </div>
-                </div>
-            </figure>
-            <div className="card-body p-4">
-                <div className="card-title flex justify-between">
-                    <h2 className="max-w-[245px]">{title}</h2>
-                    <div className={`badge ${deadline > dayjs().unix() ? "badge-accent" : "badge-neutral"}`}>
-                        {deadline > dayjs().unix() ? "In progress" : "Ended"}
                     </div>
                 </div>
                 <div className={`w-full overflow-auto ${isLast ? "lg:h-[25rem] 2xl:h-full" : "md:h-22 lg:h-24 2xl:h-60"}`}>

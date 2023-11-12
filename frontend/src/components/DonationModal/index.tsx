@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useContext, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 import { MetamaskContext } from "../../context";
 import { donateToCampaign } from "../../api/interact";
 
@@ -17,20 +17,6 @@ export default function DonationModal({
 
     const [isRevealId, setIsRevealId] = useState(false);
     const [amount, setAmount] = useState(0);
-    const [isValidAmount, setIsValidAmount] = useState(false);
-
-    const validate = (value: number) => {
-        setIsValidAmount(value > 0 && value <= Number(balance));
-    };
-
-    const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-        validate(Number(e.target.value));
-        if (!isValidAmount) {
-            setAmount(0);
-        } else {
-            setAmount(Number(e.target.value));
-        }
-    };
 
     const closeModal = () => {
         // @ts-ignore
@@ -40,8 +26,8 @@ export default function DonationModal({
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        donateToCampaign(campaignId!, amount).then(() => {
-            onCloseModal(null);
+        donateToCampaign(campaignId!, amount).finally(() => {
+            closeModal();
         });
     };
 
@@ -76,7 +62,10 @@ export default function DonationModal({
                                     type="number"
                                     placeholder="Type here"
                                     className="input input-sm input-bordered w-full max-w-xs"
-                                    onChange={handleChangeInput}
+                                    value={amount}
+                                    onChange={(e) => {
+                                        setAmount(Number(e.target.value));
+                                    }}
                                 />
                                 <p>ETH</p>
                             </div>
@@ -88,7 +77,7 @@ export default function DonationModal({
                             Cancel
                         </button>
                         <form method="dialog" onSubmit={handleSubmit}>
-                            <button className="btn btn-accent" type="submit" disabled={!isValidAmount}>
+                            <button className="btn btn-accent" type="submit" disabled={amount <= 0}>
                                 Donate
                             </button>
                         </form>
