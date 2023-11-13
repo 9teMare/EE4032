@@ -37,13 +37,9 @@ export default function CampaignList() {
 
     useEffect(() => {
         setIsLoading(true);
-        getCampaignsInBatch(currentPage - 1)
-            .then((campaignIds: string[]) => {
-                setCampaignIds(campaignIds.filter((campaign) => isValidCampaignId(campaign)));
-            })
-            .finally(() => {
-                setIsLoading(false);
-            });
+        getCampaignsInBatch(currentPage - 1).then((campaignIds: string[]) => {
+            setCampaignIds(campaignIds.filter((campaign) => isValidCampaignId(campaign)));
+        });
     }, [currentPage]);
 
     useEffect(() => {
