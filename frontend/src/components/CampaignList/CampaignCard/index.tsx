@@ -69,7 +69,7 @@ export default function CampaignCard({
             </figure>
             <div className="card-body p-4">
                 <div className="card-title flex justify-between">
-                    <h2 className="max-w-[245px]">{title}</h2>
+                    <h2 className="whitespace-nowrap overflow-auto">{title}</h2>
 
                     <div
                         className="tooltip tooltip-left"
