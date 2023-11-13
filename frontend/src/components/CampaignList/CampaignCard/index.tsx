@@ -64,7 +64,7 @@ export default function CampaignCard({
                 </div>
 
                 <div className="absolute right-2 lg:top-[130px] 2xl:top-[178px] badge badge-neutral">
-                    Raised: {ethers.toNumber(amount) / 10 ** 18} ETH
+                    Raised: {(Number(amount) / 10 ** 18).toFixed(4)} ETH
                 </div>
             </figure>
             <div className="card-body p-4">
