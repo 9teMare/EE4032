@@ -22,6 +22,7 @@ export default function DonationModal({
     const closeModal = () => {
         // @ts-ignore
         document.getElementById("donation_modal").close();
+        setAmount(0);
         onCloseModal(null);
     };
 
