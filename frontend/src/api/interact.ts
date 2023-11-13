@@ -1,5 +1,4 @@
 import { CONTRACT_ADDRESS, CONTRACT_ABI } from "../contracts/config";
-import { Web3, HttpProvider, Contract } from "web3";
 import { ethers } from "ethers";
 import { BigNumberish } from "ethers";
 

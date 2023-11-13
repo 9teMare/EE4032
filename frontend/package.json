@@ -19,8 +19,7 @@
     "react-metamask-avatar": "^1.2.1",
     "react-router-dom": "^6.16.0",
     "react-tailwindcss-datepicker": "^1.6.6",
-    "vite-tsconfig-paths": "^4.2.1",
-    "web3": "^4.1.2"
+    "vite-tsconfig-paths": "^4.2.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
