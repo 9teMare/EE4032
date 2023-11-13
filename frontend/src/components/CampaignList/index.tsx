@@ -8,6 +8,7 @@ import CampaignRegistration from "../CampaignRegistration";
 import Footer from "../Footer";
 import DonationModal from "../DonationModal";
 import { LoadingContext, MetamaskContext } from "../../context";
+import { End as EndConfirmation, Withdraw as WithdrawConfirmation } from "../Confirmation";
 
 export default function CampaignList() {
     const [campaignCount, setCampaignCount] = useState<number>(0);
@@ -19,13 +20,13 @@ export default function CampaignList() {
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    const [selectedCampaignIndex, setSelectedCampaignIndex] = useState<number | null>(null);
+    const [selectedCampaignIndex, setSelectedCampaignIndex] = useState<{ index: number; type: "end" | "donate" | "withdraw" } | null>(null);
 
     const { refreshBalance } = useContext(MetamaskContext)!;
 
     const selectedCampaignId = useMemo(() => {
         if (selectedCampaignIndex === null) return null;
-        return campaignIds[selectedCampaignIndex];
+        return campaignIds[selectedCampaignIndex.index];
     }, [selectedCampaignIndex]);
 
     useEffect(() => {
@@ -58,8 +59,16 @@ export default function CampaignList() {
 
     useEffect(() => {
         if (selectedCampaignIndex !== null) {
-            // @ts-ignore
-            document.getElementById("donation_modal").showModal();
+            if (selectedCampaignIndex.type === "end") {
+                // @ts-ignore
+                document.getElementById("end-confirmation-modal").showModal();
+            } else if (selectedCampaignIndex.type === "donate") {
+                // @ts-ignore
+                document.getElementById("donation_modal").showModal();
+            } else if (selectedCampaignIndex.type === "withdraw") {
+                // @ts-ignore
+                document.getElementById("withdrawal-confirmation-modal").showModal();
+            }
         }
     }, [selectedCampaignIndex]);
 
@@ -86,7 +95,14 @@ export default function CampaignList() {
                             <div className="col-span-2">
                                 <div className="grid grid-cols-2 gap-4">
                                     {campaignsInfo.slice(0, 4).map((info, index) => (
-                                        <CampaignCard key={index} campaignInfo={info} onDonate={() => setSelectedCampaignIndex(index)} />
+                                        <CampaignCard
+                                            key={index}
+                                            campaignId={campaignIds[index]}
+                                            campaignInfo={info}
+                                            onDonate={() => setSelectedCampaignIndex({ index, type: "donate" })}
+                                            onEndCampaign={() => setSelectedCampaignIndex({ index, type: "end" })}
+                                            onWithdraw={() => setSelectedCampaignIndex({ index, type: "withdraw" })}
+                                        />
                                     ))}
                                 </div>
                             </div>
@@ -94,8 +110,16 @@ export default function CampaignList() {
                                 {campaignsInfo.length === 5 &&
                                     campaignsInfo
                                         .slice(-1)
-                                        .map((info, index) => (
-                                            <CampaignCard key={index} campaignInfo={info} isLast onDonate={() => setSelectedCampaignIndex(4)} />
+                                        .map((info) => (
+                                            <CampaignCard
+                                                key={4}
+                                                campaignId={campaignIds[4]}
+                                                campaignInfo={info}
+                                                isLast
+                                                onDonate={() => setSelectedCampaignIndex({ index: 4, type: "donate" })}
+                                                onEndCampaign={() => setSelectedCampaignIndex({ index: 4, type: "end" })}
+                                                onWithdraw={() => setSelectedCampaignIndex({ index: 4, type: "withdraw" })}
+                                            />
                                         ))}
                             </div>
                         </div>
@@ -103,7 +127,20 @@ export default function CampaignList() {
 
                     <DonationModal
                         campaignId={selectedCampaignId}
-                        campaignInfo={selectedCampaignIndex !== null ? campaignsInfo[selectedCampaignIndex] : null}
+                        campaignInfo={selectedCampaignIndex !== null ? campaignsInfo[selectedCampaignIndex.index] : null}
+                        onCloseModal={setSelectedCampaignIndex}
+                    />
+
+                    <EndConfirmation
+                        campaignId={selectedCampaignId}
+                        title={selectedCampaignIndex !== null ? campaignsInfo[selectedCampaignIndex.index][0] : null}
+                        onCloseModal={setSelectedCampaignIndex}
+                    />
+
+                    <WithdrawConfirmation
+                        campaignId={selectedCampaignId}
+                        title={selectedCampaignIndex !== null ? campaignsInfo[selectedCampaignIndex.index][0] : null}
+                        amount={selectedCampaignIndex !== null ? campaignsInfo[selectedCampaignIndex.index][6] : null}
                         onCloseModal={setSelectedCampaignIndex}
                     />
 

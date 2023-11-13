@@ -9,7 +9,7 @@ export default function DonationModal({
 }: {
     campaignId: string | null;
     campaignInfo: null | any[];
-    onCloseModal: Dispatch<SetStateAction<number | null>>;
+    onCloseModal: Dispatch<SetStateAction<{ index: number; type: "donate" | "end" | "withdraw" } | null>>;
 }) {
     const [title, imgUrl, description, isLive, initiator, deadline, _value] = campaignInfo ?? Array(7).fill(null);
 
@@ -25,9 +25,9 @@ export default function DonationModal({
         onCloseModal(null);
     };
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        donateToCampaign(campaignId!, amount).finally(() => {
+        await donateToCampaign(campaignId!, amount).finally(() => {
             closeModal();
             refresh();
         });

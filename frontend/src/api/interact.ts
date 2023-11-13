@@ -86,6 +86,22 @@ async function donateToCampaign(campaignId: string, value: BigNumberish) {
     }
 }
 
+async function endCampaign(campaignId: string) {
+    try {
+        const contract = await getContract();
+        contract
+            .endCampaign(campaignId)
+            .then((tx) => {
+                console.log(tx);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 async function withdrawCampaignFunds(campaignId: string) {
     try {
         const contract = await getContract();
@@ -102,4 +118,4 @@ async function withdrawCampaignFunds(campaignId: string) {
     }
 }
 
-export { getCampaignCount, startCampaign, getCampaignsInBatch, getAllCampaign, donateToCampaign, withdrawCampaignFunds };
+export { getCampaignCount, startCampaign, getCampaignsInBatch, getAllCampaign, donateToCampaign, endCampaign, withdrawCampaignFunds };
