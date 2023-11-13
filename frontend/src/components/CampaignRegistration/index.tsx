@@ -63,6 +63,16 @@ export default function CampaignRegistration() {
 
     const [isAllowSubmit, setIsAllowSubmit] = useState(false);
 
+    const clearForm = () => {
+        setCampaignTitle("");
+        setDescription("");
+        setImgUrl("");
+        setDeadline({
+            startDate: new Date(),
+            endDate: new Date(),
+        });
+    };
+
     const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
         console.log("submit", campaignTitle, description, imgUrl, dayjs(deadline?.endDate).unix());
         e.preventDefault();
@@ -77,6 +87,7 @@ export default function CampaignRegistration() {
             //@ts-ignore
             document.getElementById("register_campaign").close();
             refresh();
+            clearForm();
         });
     };
 

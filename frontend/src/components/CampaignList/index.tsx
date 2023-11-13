@@ -70,6 +70,9 @@ export default function CampaignList() {
 
     const refresh = async () => {
         setIsLoading(true);
+        getCampaignCount().then((count) => {
+            setCampaignCount(Number(count));
+        });
         getCampaignsInBatch(currentPage - 1)
             .then((campaignIds: string[]) => {
                 setCampaignIds(campaignIds.filter((campaign) => isValidCampaignId(campaign)));
