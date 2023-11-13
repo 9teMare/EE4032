@@ -57,7 +57,7 @@ export default function Home() {
                         className="flex flex-row justify-center z-20 mx-0 mb-0 mt-8 md:mt-0 md:mb-[35px] max-w-2xl md:space-x-8"
                     >
                         <div className="card backdrop-blur-sm shadow-md w-1/2">
-                            <div className="card-body">
+                            <div className="card-body p-4">
                                 <h2 className="card-title flex items-center font-semibold text-[1em] light:text-[#1a2b3b]">
                                     Blockchain
                                     <svg
@@ -84,7 +84,7 @@ export default function Home() {
                             </div>
                         </div>
                         <div className="card backdrop-blur-sm shadow-md w-1/2">
-                            <div className="card-body">
+                            <div className="card-body p-4">
                                 <h2 className="card-title flex items-center font-semibold text-[1em] light:text-[#1a2b3b]">A NUS Project</h2>
                                 <p className="text-[14px] leading-[20px] light:text-[#1a2b3b] font-normal">
                                     This project is created under the NUS module EE4032 Blockchain Engineering.

@@ -70,8 +70,6 @@ async function getAllCampaign(campaignIds: string[]): Promise<any[]> {
 
 async function donateToCampaign(campaignId: string, value: BigNumberish) {
     try {
-        console.log(value);
-        console.log(ethers.parseEther(parseFloat(value.toString()).toString()));
         const contract = await getContract();
         contract
             .donateToCampaign(campaignId, {
@@ -88,4 +86,20 @@ async function donateToCampaign(campaignId: string, value: BigNumberish) {
     }
 }
 
-export { getCampaignCount, startCampaign, getCampaignsInBatch, getAllCampaign, donateToCampaign };
+async function withdrawCampaignFunds(campaignId: string) {
+    try {
+        const contract = await getContract();
+        contract
+            .withdrawCampaignFunds(campaignId)
+            .then((tx) => {
+                console.log(tx);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+export { getCampaignCount, startCampaign, getCampaignsInBatch, getAllCampaign, donateToCampaign, withdrawCampaignFunds };

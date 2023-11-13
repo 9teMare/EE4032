@@ -35,7 +35,7 @@ export default function CampaignCard({ campaignInfo, isLast, onDonate }: { campa
                         })}
                     >
                         <button
-                            className={`btn btn-neutral btn-sm ${isConnected ? " hover:btn-accent " : "btn-disabled"}`}
+                            className={`btn btn-outline btn-accent btn-sm ${isConnected ? " hover:btn-accent " : "btn-disabled"}`}
                             onClick={() => onDonate()}
                         >
                             Donate
