@@ -80,8 +80,17 @@ export default function CampaignRegistration() {
         });
     };
 
+    function isValidUrl(url: string) {
+        try {
+            new URL(url);
+            return true;
+        } catch (err) {
+            return false;
+        }
+    }
+
     useEffect(() => {
-        if (campaignTitle && description && imgUrl && dayjs(deadline?.endDate).unix() > dayjs().unix()) {
+        if (campaignTitle && description && isValidUrl(imgUrl) && dayjs(deadline?.endDate).unix() > dayjs().unix()) {
             setIsAllowSubmit(true);
         } else {
             setIsAllowSubmit(false);
