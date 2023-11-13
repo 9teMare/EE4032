@@ -4,12 +4,22 @@ import { MetamaskContext } from "../context";
 
 import CampaignList from "../components/CampaignList";
 
+import Error from "../components/Error";
+
 export default function Dashboard() {
+    const { metamask } = useContext(MetamaskContext)!;
+
     return (
-        <Layout>
-            <div className="flex flex-col justify-center p-2 h-full">
-                <CampaignList />
-            </div>
-        </Layout>
+        <>
+            {metamask ? (
+                <Layout>
+                    <div className="flex flex-col justify-center p-2 h-full">
+                        <CampaignList />
+                    </div>
+                </Layout>
+            ) : (
+                <Error />
+            )}
+        </>
     );
 }

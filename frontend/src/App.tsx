@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, redirect, RouterProvider } from "react-router-dom";
 import "./App.css";
 import { MetamaskContext } from "./context";
 import Home from "./pages/home";
@@ -14,14 +14,10 @@ function App() {
     const [balance, setBalance] = useState<string>();
     const [address, setAddress] = useState<string>();
 
-    const isMetaMaskInstalled = () => {
+    useEffect(() => {
         //@ts-ignore
         const { ethereum } = window;
         setMetamask(ethereum);
-    };
-
-    useEffect(() => {
-        isMetaMaskInstalled();
     }, []);
 
     const refreshBalance = async () => {
@@ -43,6 +39,10 @@ function App() {
         {
             path: "/dashboard",
             element: <Dashboard />,
+        },
+        {
+            path: "/error",
+            element: <ErrorPage />,
         },
     ]);
 
