@@ -9,6 +9,8 @@ import Footer from "../Footer";
 import DonationModal from "../DonationModal";
 import { LoadingContext, MetamaskContext } from "../../context";
 import { End as EndConfirmation, Withdraw as WithdrawConfirmation } from "../Confirmation";
+import HistoryModal from "../HistoryModal";
+import { MODAL_TYPE } from "../../constants";
 
 export default function CampaignList() {
     const [campaignCount, setCampaignCount] = useState<number>(0);
@@ -20,7 +22,7 @@ export default function CampaignList() {
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    const [selectedCampaignIndex, setSelectedCampaignIndex] = useState<{ index: number; type: "end" | "donate" | "withdraw" } | null>(null);
+    const [selectedCampaignIndex, setSelectedCampaignIndex] = useState<{ index: number; type: MODAL_TYPE } | null>(null);
 
     const { refreshBalance } = useContext(MetamaskContext)!;
 
@@ -55,15 +57,18 @@ export default function CampaignList() {
 
     useEffect(() => {
         if (selectedCampaignIndex !== null) {
-            if (selectedCampaignIndex.type === "end") {
+            if (selectedCampaignIndex.type === MODAL_TYPE.End) {
                 // @ts-ignore
                 document.getElementById("end-confirmation-modal").showModal();
-            } else if (selectedCampaignIndex.type === "donate") {
+            } else if (selectedCampaignIndex.type === MODAL_TYPE.Donate) {
                 // @ts-ignore
                 document.getElementById("donation_modal").showModal();
-            } else if (selectedCampaignIndex.type === "withdraw") {
+            } else if (selectedCampaignIndex.type === MODAL_TYPE.Withdraw) {
                 // @ts-ignore
                 document.getElementById("withdrawal-confirmation-modal").showModal();
+            } else if (selectedCampaignIndex.type === MODAL_TYPE.History) {
+                // @ts-ignore
+                document.getElementById("history-modal").showModal();
             }
         }
     }, [selectedCampaignIndex]);
@@ -98,9 +103,10 @@ export default function CampaignList() {
                                             key={index}
                                             campaignId={campaignIds[index]}
                                             campaignInfo={info}
-                                            onDonate={() => setSelectedCampaignIndex({ index, type: "donate" })}
-                                            onEndCampaign={() => setSelectedCampaignIndex({ index, type: "end" })}
-                                            onWithdraw={() => setSelectedCampaignIndex({ index, type: "withdraw" })}
+                                            onDonate={() => setSelectedCampaignIndex({ index, type: MODAL_TYPE.Donate })}
+                                            onEndCampaign={() => setSelectedCampaignIndex({ index, type: MODAL_TYPE.End })}
+                                            onWithdraw={() => setSelectedCampaignIndex({ index, type: MODAL_TYPE.Withdraw })}
+                                            onShowHistory={() => setSelectedCampaignIndex({ index, type: MODAL_TYPE.History })}
                                         />
                                     ))}
                                 </div>
@@ -115,9 +121,10 @@ export default function CampaignList() {
                                                 campaignId={campaignIds[4]}
                                                 campaignInfo={info}
                                                 isLast
-                                                onDonate={() => setSelectedCampaignIndex({ index: 4, type: "donate" })}
-                                                onEndCampaign={() => setSelectedCampaignIndex({ index: 4, type: "end" })}
-                                                onWithdraw={() => setSelectedCampaignIndex({ index: 4, type: "withdraw" })}
+                                                onDonate={() => setSelectedCampaignIndex({ index: 4, type: MODAL_TYPE.Donate })}
+                                                onEndCampaign={() => setSelectedCampaignIndex({ index: 4, type: MODAL_TYPE.End })}
+                                                onWithdraw={() => setSelectedCampaignIndex({ index: 4, type: MODAL_TYPE.Withdraw })}
+                                                onShowHistory={() => setSelectedCampaignIndex({ index: 4, type: MODAL_TYPE.History })}
                                             />
                                         ))}
                             </div>
@@ -140,6 +147,12 @@ export default function CampaignList() {
                         campaignId={selectedCampaignId}
                         title={selectedCampaignIndex !== null ? campaignsInfo[selectedCampaignIndex.index][0] : null}
                         amount={selectedCampaignIndex !== null ? campaignsInfo[selectedCampaignIndex.index][6] : null}
+                        onCloseModal={setSelectedCampaignIndex}
+                    />
+
+                    <HistoryModal
+                        campaignId={selectedCampaignId}
+                        title={selectedCampaignIndex !== null ? campaignsInfo[selectedCampaignIndex.index][0] : null}
                         onCloseModal={setSelectedCampaignIndex}
                     />
 

@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useContext } from "react";
 import { LoadingContext } from "../../context";
 import { endCampaign } from "../../api/interact";
+import { MODAL_TYPE } from "../../constants";
 
 export default function Confirmation({
     campaignId,
@@ -9,7 +10,7 @@ export default function Confirmation({
 }: {
     campaignId: string | null;
     title: string;
-    onCloseModal: Dispatch<SetStateAction<{ index: number; type: "donate" | "end" | "withdraw" } | null>>;
+    onCloseModal: Dispatch<SetStateAction<{ index: number; type: MODAL_TYPE } | null>>;
 }) {
     const closeModal = () => {
         // @ts-ignore

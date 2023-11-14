@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 import { LoadingContext, MetamaskContext } from "../../context";
 import { donateToCampaign } from "../../api/interact";
+import { MODAL_TYPE } from "../../constants";
 
 export default function DonationModal({
     campaignId,
@@ -9,7 +10,7 @@ export default function DonationModal({
 }: {
     campaignId: string | null;
     campaignInfo: null | any[];
-    onCloseModal: Dispatch<SetStateAction<{ index: number; type: "donate" | "end" | "withdraw" } | null>>;
+    onCloseModal: Dispatch<SetStateAction<{ index: number; type: MODAL_TYPE } | null>>;
 }) {
     const [title, imgUrl, description, isLive, initiator, deadline, _value] = campaignInfo ?? Array(7).fill(null);
 

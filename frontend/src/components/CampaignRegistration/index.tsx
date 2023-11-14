@@ -30,7 +30,9 @@ function Field({
                     onChange={(e) => state.setValue(e.target.value)}
                 />
             ) : type == "date" ? (
-                <Datepicker value={state.value} onChange={handler!} useRange={false} asSingle={true} />
+                <div className="flex w-full border-slate-300 dark:border-slate-700 border-[1px] rounded-lg">
+                    <Datepicker value={state.value} onChange={handler!} useRange={false} asSingle={true} primaryColor="teal" />
+                </div>
             ) : (
                 <input
                     type="text"

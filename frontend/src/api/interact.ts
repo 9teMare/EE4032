@@ -1,9 +1,12 @@
 import { CONTRACT_ADDRESS, CONTRACT_ABI } from "../contracts/config";
 import { ethers } from "ethers";
 import { BigNumberish } from "ethers";
+import { EVENT, EVENT_ARGUMENT_TYPES, EVENT_TOPIC } from "../constants";
+import { decodeData } from "../utils";
 
 //@ts-ignore
 const provider = new ethers.BrowserProvider(window.ethereum);
+const etherscanProvider = new ethers.EtherscanProvider("sepolia", import.meta.env.VITE_ETHERSCAN_API_KEY);
 let chainrityContract: null | ethers.Contract = null;
 
 async function getContract() {
@@ -117,4 +120,32 @@ async function withdrawCampaignFunds(campaignId: string) {
     }
 }
 
-export { getCampaignCount, startCampaign, getCampaignsInBatch, getAllCampaign, donateToCampaign, endCampaign, withdrawCampaignFunds };
+async function getCampaignLogs(campaignId: string, event?: EVENT) {
+    const currentBlock = await provider.getBlockNumber();
+    const filter = {
+        address: CONTRACT_ADDRESS,
+        fromBlock: 0,
+        toBlock: currentBlock,
+        topics: event ? [ethers.id(EVENT_TOPIC[event])] : [],
+    };
+    const logs = await provider.getLogs(filter);
+
+    if (!event) {
+        return logs;
+    }
+    return logs.filter((log) => {
+        const decodedLog = decodeData(event, log.data);
+        return decodedLog[0] === campaignId;
+    });
+}
+
+export {
+    getCampaignCount,
+    startCampaign,
+    getCampaignsInBatch,
+    getAllCampaign,
+    donateToCampaign,
+    endCampaign,
+    withdrawCampaignFunds,
+    getCampaignLogs,
+};
