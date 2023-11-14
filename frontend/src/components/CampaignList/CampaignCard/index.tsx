@@ -25,11 +25,11 @@ export default function CampaignCard({
 
     const [isHover, setIsHover] = useState<boolean>(false);
 
-    const { address } = useContext(MetamaskContext)!;
+    const { wallet } = useContext(MetamaskContext)!;
 
     const isInitiator = useMemo(() => {
-        return initiator.toUpperCase() === address?.toUpperCase();
-    }, [initiator, address]);
+        return initiator.toUpperCase() === wallet.accounts[0].toUpperCase();
+    }, [initiator, wallet]);
 
     return (
         <div className={`card w-full h-full bg-base-100 shadow-xl`}>

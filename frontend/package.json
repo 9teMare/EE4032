@@ -10,7 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "alchemy-sdk": "^2.11.0",
     "dayjs": "^1.11.10",
     "ethers": "^6.7.1",
     "framer-motion": "^10.16.4",

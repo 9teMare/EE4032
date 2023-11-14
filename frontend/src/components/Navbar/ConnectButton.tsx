@@ -5,7 +5,7 @@ import { ethers } from "ethers";
 export default function ConnectButton() {
     const { metamask, setters } = useContext(MetamaskContext)!;
 
-    const { setNetwork, setBalance, setAddress, setIsConnected } = setters;
+    const { setNetwork, setBalance, setWallet, setIsConnected } = setters;
 
     const provider = new ethers.BrowserProvider(metamask);
 
@@ -14,7 +14,6 @@ export default function ConnectButton() {
             const accounts = await metamask.request({
                 method: "eth_requestAccounts",
             });
-
             const chainId = await metamask.request({
                 method: "eth_chainId",
             });
@@ -30,9 +29,9 @@ export default function ConnectButton() {
             } else if (chainId === "0xaa36a7") {
                 setNetwork("Sepolia Test Network");
             } else {
-                setNetwork("Other Test Network");
+                setNetwork("Unknown Test Network");
             }
-            setAddress(accounts[0]);
+            setWallet({ accounts: accounts });
             setBalance(bal);
             setIsConnected(true);
         } catch (error) {

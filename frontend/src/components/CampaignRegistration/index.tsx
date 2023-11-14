@@ -30,7 +30,6 @@ function Field({
                     onChange={(e) => state.setValue(e.target.value)}
                 />
             ) : type == "date" ? (
-                // <div className="flex w-full border-slate-300 dark:border-slate-700 border-[1px] rounded-lg">
                 <Datepicker
                     value={state.value}
                     onChange={handler!}
@@ -43,7 +42,6 @@ function Field({
                     inputClassName="w-full rounded-md focus:ring-0 font-normal bg-transparent p-4 h-12 focus:ring-white"
                 />
             ) : (
-                // </div>
                 <input
                     type="text"
                     placeholder="Type here"
@@ -65,7 +63,7 @@ export default function CampaignRegistration() {
         endDate: new Date(),
     });
 
-    const { address, isConnected } = useContext(MetamaskContext)!;
+    const { wallet, isConnected } = useContext(MetamaskContext)!;
     const { refresh } = useContext(LoadingContext)!;
 
     const handleValueChange = (newValue: DateValueType) => {
@@ -90,7 +88,7 @@ export default function CampaignRegistration() {
         e.preventDefault();
 
         startCampaign({
-            account: address!,
+            account: wallet.accounts[0],
             title: campaignTitle,
             description: description,
             imgUrl: imgUrl,

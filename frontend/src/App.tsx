@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { createBrowserRouter, redirect, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
 import { MetamaskContext } from "./context";
 import Home from "./pages/home";
@@ -11,14 +11,62 @@ function App() {
     const [metamask, setMetamask] = useState<any>(null); // window.ethereum
     const [network, setNetwork] = useState<string>();
     const [isConnected, setIsConnected] = useState(false);
-    const [balance, setBalance] = useState<string>();
-    const [address, setAddress] = useState<string>();
+    const [balance, setBalance] = useState<string>("0");
+    const initialState: { accounts: string[] } = { accounts: [] };
+    const [wallet, setWallet] = useState(initialState);
 
     useEffect(() => {
         //@ts-ignore
         const { ethereum } = window;
         setMetamask(ethereum);
+
+        const refreshAccounts = (accounts: any) => {
+            if (accounts.length > 0) {
+                setWallet({ accounts });
+                setIsConnected(true);
+            } else {
+                setWallet(initialState);
+            }
+        };
+
+        const onDisconnect = () => {
+            setWallet(initialState);
+            setIsConnected(false);
+            setBalance("0");
+            setNetwork(undefined);
+            setMetamask(null);
+        };
+
+        const getProvider = async () => {
+            const provider = new ethers.BrowserProvider(metamask);
+
+            if (provider) {
+                const accounts = await ethereum.request({ method: "eth_accounts" });
+                refreshAccounts(accounts);
+                ethereum.on("accountsChanged", refreshAccounts);
+                ethereum.on("disconnect", onDisconnect);
+            }
+        };
+
+        getProvider();
+        return () => {
+            ethereum?.removeListener("accountsChanged", refreshAccounts);
+            ethereum?.removeListener("disconnect", onDisconnect);
+        };
     }, []);
+
+    useEffect(() => {
+        const refreshBalance = async () => {
+            const provider = new ethers.BrowserProvider(metamask);
+            const balanceVal = await provider.getBalance(wallet.accounts[0]);
+            const bal = ethers.formatEther(balanceVal);
+            setBalance(bal);
+        };
+
+        if (isConnected) {
+            refreshBalance();
+        }
+    }, [isConnected, wallet]);
 
     const refreshBalance = async () => {
         const accounts = await metamask.request({
@@ -50,13 +98,13 @@ function App() {
         <MetamaskContext.Provider
             value={{
                 metamask: metamask,
-                address: address,
+                wallet: wallet,
                 balance: balance,
                 network: network,
                 isConnected: isConnected,
                 setters: {
                     setNetwork,
-                    setAddress,
+                    setWallet,
                     setBalance,
                     setIsConnected,
                 },

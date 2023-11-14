@@ -24,7 +24,7 @@ export default function CampaignList() {
 
     const [selectedCampaignIndex, setSelectedCampaignIndex] = useState<{ index: number; type: MODAL_TYPE } | null>(null);
 
-    const { refreshBalance } = useContext(MetamaskContext)!;
+    const { refreshBalance, isConnected } = useContext(MetamaskContext)!;
 
     const selectedCampaignId = useMemo(() => {
         if (selectedCampaignIndex === null) return null;
@@ -88,11 +88,17 @@ export default function CampaignList() {
         refreshBalance();
     };
 
+    useEffect(() => {
+        if (isConnected) {
+            refresh();
+        }
+    }, [isConnected]);
+
     return (
         <LoadingContext.Provider value={{ refresh }}>
             <div className="flex h-full">
                 <div className="flex justify-between flex-col w-full h-full">
-                    {isLoading ? (
+                    {isLoading || !isConnected ? (
                         <Loading />
                     ) : (
                         <div className="gap-4 grid grid-cols-3">

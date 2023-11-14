@@ -5,8 +5,7 @@ import ConnectButton from "./ConnectButton";
 import { Link } from "react-router-dom";
 
 export default function Navbar() {
-    const { metamask, address, setters, balance, refreshBalance } = useContext(MetamaskContext)!;
-    const { setIsConnected } = setters;
+    const { metamask, wallet, setters, balance, refreshBalance } = useContext(MetamaskContext)!;
 
     return (
         <div className="navbar bg-base-100 justify-between h-16 drop-shadow-md">
@@ -16,10 +15,10 @@ export default function Navbar() {
                 </Link>
             </div>
             <div className="flex-none gap-2">
-                {metamask && address ? (
+                {metamask && wallet.accounts.length > 0 ? (
                     <div className="flex justify-center items-center gap-4">
                         <div className="flex flex-col">
-                            <p>Welcome, {address}</p>
+                            <p>Welcome, {wallet.accounts[0]}</p>
                             <div className="flex justify-end items-center gap-2">
                                 <p>Available balance: {Number(balance).toFixed(4)} ETH </p>
                                 <button
@@ -35,7 +34,7 @@ export default function Navbar() {
 
                         <div className="dropdown dropdown-end">
                             <label tabIndex={0} className="btn btn-ghost btn-circle ">
-                                <ProfileIcon address={address!} />
+                                <ProfileIcon address={wallet.accounts[0]} />
                             </label>
                         </div>
                     </div>

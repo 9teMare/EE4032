@@ -2,14 +2,14 @@ import React, { createContext } from "react";
 
 export const MetamaskContext = createContext<{
     metamask: any;
-    address: string | undefined;
-    balance: string | undefined;
+    wallet: { accounts: string[] };
+    balance: string;
     network: string | undefined;
     isConnected: boolean;
     setters: {
         setNetwork: React.Dispatch<React.SetStateAction<string | undefined>>;
-        setAddress: React.Dispatch<React.SetStateAction<string | undefined>>;
-        setBalance: React.Dispatch<React.SetStateAction<string | undefined>>;
+        setWallet: React.Dispatch<React.SetStateAction<{ accounts: string[] }>>;
+        setBalance: React.Dispatch<React.SetStateAction<string>>;
         setIsConnected: React.Dispatch<React.SetStateAction<boolean>>;
     };
     refreshBalance: () => Promise<void>;
