@@ -63,7 +63,11 @@ export default function TabContent({ selectedTab, campaignId }: { selectedTab: E
                                                 return (
                                                     <div key={j} className="flex flex-col gap-[2px]">
                                                         <p className="font-semibold">{EVENT_ARGUMENTS[selectedTab][j]}</p>
-                                                        <p>{Number(row.toString()) / 10 ** 18} ETH</p>
+                                                        {EVENT_ARGUMENTS[selectedTab][j] === "amount" ? (
+                                                            <p>{Number(row.toString()) / 10 ** 18} ETH</p>
+                                                        ) : (
+                                                            <p>{row}</p>
+                                                        )}
                                                     </div>
                                                 );
                                             })}
