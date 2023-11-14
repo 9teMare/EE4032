@@ -30,10 +30,20 @@ function Field({
                     onChange={(e) => state.setValue(e.target.value)}
                 />
             ) : type == "date" ? (
-                <div className="flex w-full border-slate-300 dark:border-slate-700 border-[1px] rounded-lg">
-                    <Datepicker value={state.value} onChange={handler!} useRange={false} asSingle={true} primaryColor="teal" />
-                </div>
+                // <div className="flex w-full border-slate-300 dark:border-slate-700 border-[1px] rounded-lg">
+                <Datepicker
+                    value={state.value}
+                    onChange={handler!}
+                    useRange={false}
+                    asSingle={true}
+                    primaryColor="teal"
+                    popoverDirection="up"
+                    placeholder="The deadline cannot be today or in the past."
+                    containerClassName="relative w-full border-slate-300 dark:border-gray-700 border-[1px] rounded-lg"
+                    inputClassName="w-full rounded-md focus:ring-0 font-normal bg-transparent p-4 h-12 focus:ring-white"
+                />
             ) : (
+                // </div>
                 <input
                     type="text"
                     placeholder="Type here"
