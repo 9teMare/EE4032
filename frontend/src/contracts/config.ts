@@ -1,5 +1,4 @@
 export const CONTRACT_ADDRESS = "0x829C3CB74C867aA96a3932A7bCD0906D1D44BA41";
-// export const CONTRACT_ADDRESS = "0x9a550b1A9e425C12d47374Ae8483AD7b61BC787A";
 
 export const CONTRACT_ABI = [
     { inputs: [], stateMutability: "nonpayable", type: "constructor" },
