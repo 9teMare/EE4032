@@ -6,7 +6,6 @@ import { decodeData } from "../utils";
 
 //@ts-ignore
 const provider = new ethers.BrowserProvider(window.ethereum);
-const etherscanProvider = new ethers.EtherscanProvider("sepolia", import.meta.env.VITE_ETHERSCAN_API_KEY);
 let chainrityContract: null | ethers.Contract = null;
 
 async function getContract() {

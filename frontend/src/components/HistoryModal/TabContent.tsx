@@ -82,6 +82,10 @@ export default function TabContent({ selectedTab, campaignId }: { selectedTab: E
                         </tbody>
                     </table>
                 </div>
+            ) : selectedTab === EVENT.CampaignEnded ? (
+                <div className="h-full w-full flex justify-center items-center">
+                    No Data Found onchain. If the campaign deadline has passed, maybe the initiator has not manually end the campaign yet.
+                </div>
             ) : (
                 <div className="h-full w-full flex justify-center items-center">No Data Found onchain</div>
             )}

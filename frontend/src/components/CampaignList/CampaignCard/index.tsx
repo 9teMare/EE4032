@@ -31,6 +31,14 @@ export default function CampaignCard({
         return initiator.toUpperCase() === wallet.accounts[0].toUpperCase();
     }, [initiator, wallet]);
 
+    const isCampaignLive = useMemo(() => {
+        return isLive && dayjs.unix(deadline.toString()).diff(dayjs(), "days") >= 0;
+    }, [deadline, isLive]);
+
+    const isLiveButDeadlinePassed = useMemo(() => {
+        return isLive && dayjs.unix(deadline.toString()).diff(dayjs(), "days") < 0;
+    }, [deadline, isLive]);
+
     return (
         <div className={`card w-full h-full bg-base-100 shadow-xl`}>
             <figure className="lg:h-40 2xl:h-52" onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
@@ -52,26 +60,26 @@ export default function CampaignCard({
 
                 <div className="dropdown dropdown-hover dropdown-bottom dropdown-end absolute right-2 top-[6px] drop-shadow-lg">
                     <label tabIndex={0}>
-                        <div className={`badge ${isLive ? "badge-accent" : "badge-neutral"}`}>{isLive ? "In progress" : "Ended"}</div>
+                        <div className={`badge ${isCampaignLive ? "badge-accent" : "badge-neutral"}`}>{isCampaignLive ? "In progress" : "Ended"}</div>
                     </label>
-                    {isLive && (
-                        <ul
-                            tabIndex={0}
-                            className="dropdown-content z-[1] menu p-2 shadow bg-base-100 w-32 justify-center items-center rounded-lg gap-2"
-                        >
-                            <li className="text-center">{isLive ? `${dayjs.unix(deadline.toString()).diff(dayjs(), "days")} days left` : "Ended"}</li>
-                            {isInitiator && (
-                                <button
-                                    className="btn btn-error btn-sm w-full"
-                                    onClick={() => {
-                                        onEndCampaign();
-                                    }}
-                                >
-                                    End Now
-                                </button>
-                            )}
-                        </ul>
-                    )}
+
+                    <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 w-32 justify-center items-center rounded-lg gap-2">
+                        <li className="text-center">
+                            {isCampaignLive
+                                ? `${dayjs.unix(deadline.toString()).diff(dayjs(), "days")} day(s) left`
+                                : `Ended ${dayjs().diff(dayjs.unix(deadline.toString()), "days")} day(s) ago`}
+                        </li>
+                        {isInitiator && isCampaignLive && (
+                            <button
+                                className="btn btn-error btn-sm w-full"
+                                onClick={() => {
+                                    onEndCampaign();
+                                }}
+                            >
+                                End Now
+                            </button>
+                        )}
+                    </ul>
                 </div>
 
                 <div className="absolute right-2 lg:top-[130px] 2xl:top-[178px] badge badge-neutral">
@@ -88,18 +96,34 @@ export default function CampaignCard({
                             "data-tip": "Please connect your Metamask wallet first before donating",
                         })}
                     >
-                        {!isLive && isInitiator ? (
-                            <button
-                                className={`btn btn-outline btn-warning btn-sm ${isConnected ? " hover:btn-warning " : "btn-disabled"}`}
-                                onClick={() => onWithdraw()}
-                            >
-                                Withdraw
-                            </button>
+                        {!isCampaignLive && isInitiator ? (
+                            isLiveButDeadlinePassed ? (
+                                <div
+                                    className="tooltip tooltip-error "
+                                    data-tip="Deadline has passed. Please manually end the campaign before you can withdraw the funds."
+                                >
+                                    <button
+                                        className={`btn btn-error btn-sm btn-outline ${isConnected ? " hover:btn-error " : "btn-disabled"}`}
+                                        onClick={() => {
+                                            onEndCampaign();
+                                        }}
+                                    >
+                                        End
+                                    </button>
+                                </div>
+                            ) : (
+                                <button
+                                    className={`btn btn-outline btn-warning btn-sm ${isConnected ? " hover:btn-warning " : "btn-disabled"}`}
+                                    onClick={() => onWithdraw()}
+                                >
+                                    Withdraw
+                                </button>
+                            )
                         ) : (
                             <button
                                 className={`btn btn-outline btn-accent btn-sm ${isConnected ? " hover:btn-accent " : "btn-disabled"}`}
                                 onClick={() => onDonate()}
-                                disabled={!isConnected || !isLive}
+                                disabled={!isConnected || !isCampaignLive}
                             >
                                 Donate
                             </button>
